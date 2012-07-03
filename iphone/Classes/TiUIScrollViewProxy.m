@@ -265,13 +265,31 @@
 
 - (void)scrollViewDidEndZooming:(UIScrollView *)scrollView withView:(UIView *)view atScale:(float)scale
 {
-	[self replaceValue:NUMFLOAT(scale) forKey:@"scale" notification:NO];
+	[self replaceValue:NUMFLOAT(scale) forKey:@"scaleEnd" notification:NO];
 	
+	if ([self _hasListeners:@"scaleEnd"])
+	{
+		[self fireEvent:@"scaleEnd" withObject:[NSDictionary dictionaryWithObjectsAndKeys:
+											  NUMFLOAT(scale),@"scale",
+											  nil]];
+	}
+}
+
+- (void)scrollViewWillBeginZooming:(UIScrollView *)scrollView withView:(UIView *)view
+{
+	if ([self _hasListeners:@"scaleStart"])
+	{
+		[self fireEvent:@"scaleStart"];
+	}
+}
+
+- (void)scrollViewDidZoom:(UIScrollView *)scrollView
+{
 	if ([self _hasListeners:@"scale"])
 	{
 		[self fireEvent:@"scale" withObject:[NSDictionary dictionaryWithObjectsAndKeys:
-											  NUMFLOAT(scale),@"scale",
-											  nil]];
+                                             NUMFLOAT(scrollView.zoomScale),@"scale",
+                                             nil]];
 	}
 }
 

@@ -300,6 +300,17 @@
 	[(id<UIScrollViewDelegate>)[self proxy] scrollViewDidEndZooming:scrollView withView:(UIView*)view atScale:scale];
 }
 
+- (void)scrollViewWillBeginZooming:(UIScrollView *)scrollView withView:(UIView *)view
+{
+	// scale between minimum and maximum. called after any 'bounce' animations
+	[(id<UIScrollViewDelegate>)[self proxy] scrollViewWillBeginZooming:scrollView withView:(UIView*)view];
+}
+
+- (void)scrollViewDidZoom:(UIScrollView *)scrollView_
+{
+	[(id<UIScrollViewDelegate>)[self proxy] scrollViewDidZoom:scrollView_];
+}
+
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView_  
 {
 	// Tells the delegate when the scroll view is about to start scrolling the content.
